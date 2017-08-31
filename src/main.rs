@@ -65,6 +65,7 @@ fn main() {
           process::exit(1);
         },
 
+        // KEYDOWN
         // Player 1
         Event::KeyDown { keycode: Some(Keycode::Left), ..} => {
           keyState.insert(Keycode::Left, true);
@@ -99,6 +100,7 @@ fn main() {
           keyState.insert(Keycode::Z, true);
         },
 
+        // KEYUP
         // Player 1
         Event::KeyUp { keycode: Some(Keycode::Left), ..} => {
           keyState.insert(Keycode::Left, false);
@@ -132,40 +134,6 @@ fn main() {
         Event::KeyUp { keycode: Some(Keycode::Z), ..} => {
           keyState.insert(Keycode::Z, false);
         },
-
-        // // Player 1
-        // Event::KeyDown { keycode: Some(Keycode::Left), ..} => {
-        //   rect.x -= 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::Right), ..} => {
-        //   rect.x += 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::Up), ..} => {
-        //   rect.y -= 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::Down), ..} => {
-        //   rect.y += 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::Slash), ..} => {
-        //   bullets.push(Rect::new(rect.x, rect.y, 5, 5));
-        // },
-
-        // // Player 2
-        // Event::KeyDown { keycode: Some(Keycode::A), ..} => {
-        //   rect2.x -= 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::D), ..} => {
-        //   rect2.x += 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::W), ..} => {
-        //   rect2.y -= 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::S), ..} => {
-        //   rect2.y += 10;
-        // },
-        // Event::KeyDown { keycode: Some(Keycode::Z), ..} => {
-        //   bullets.push(Rect::new(rect2.x, rect2.y, 5, 5));
-        // },
         _ => {}
       }
     }
@@ -188,12 +156,37 @@ fn main() {
       _ => {}
     }
     match keyState.get(&Keycode::Slash) {
-      Some(&true) => bullets.push(Rect::new(p1Pos[0] as i32, p1Pos[1] as i32, 5, 5)),
+      Some(&true) => p1Bullets.push(Rect::new(p1Pos[0] as i32, p1Pos[1] as i32, 5, 5)),
+      _ => {}
+    }
+
+    // Player 2
+    match keyState.get(&Keycode::A) {
+      Some(&true) => p2Pos[0] -= p2Speed,
+      _ => {}
+    }
+    match keyState.get(&Keycode::D) {
+      Some(&true) => p2Pos[0] += p2Speed,
+      _ => {}
+    }
+    match keyState.get(&Keycode::W) {
+      Some(&true) => p2Pos[1] -= p2Speed,
+      _ => {}
+    }
+    match keyState.get(&Keycode::S) {
+      Some(&true) => p2Pos[1] += p2Speed,
+      _ => {}
+    }
+    match keyState.get(&Keycode::Z) {
+      Some(&true) => p2Bullets.push(Rect::new(p2Pos[0] as i32, p2Pos[1] as i32, 5, 5)),
       _ => {}
     }
 
     p1Rect.x = p1Pos[0] as i32;
     p1Rect.y = p1Pos[1] as i32;
+
+    p2Rect.x = p2Pos[0] as i32;
+    p2Rect.y = p2Pos[1] as i32;
 
     let _ = renderer.set_draw_color(black);
     let _ = renderer.clear();
