@@ -170,11 +170,13 @@ fn main() {
       }
     }
 
-    if Some(&true) == keyState.get(&Keycode::Left) {
-      p1Pos[0] -= p1Speed;
+    match keyState.get(&Keycode::Left) {
+      Some(&true) => p1Pos[0] -= p1Speed,
+      _ => {}
     }
-    if Some(&true) == keyState.get(&Keycode::Right) {
-      p1Pos[0] += p1Speed;
+    match keyState.get(&Keycode::Right) {
+      Some(&true) => p1Pos[0] += p1Speed,
+      _ => {}
     }
 
     p1Rect.x = p1Pos[0] as i32;
