@@ -37,7 +37,9 @@ fn main() {
 
   let mut rect = Rect::new(10, 10, 10, 10);
   let mut rect2 = Rect::new(rect2Startx as i32, rect2Starty as i32, 10, 10);
+  let mut bullets = Vec::new();
 
+  let white = sdl2::pixels::Color::RGB(255, 255, 255);
   let black = sdl2::pixels::Color::RGB(0, 0, 0);
   let blue = sdl2::pixels::Color::RGB(0, 0, 255);
   let red = sdl2::pixels::Color::RGB(255, 0, 0);
@@ -53,6 +55,8 @@ fn main() {
         Event::Quit {..} | Event::KeyDown {keycode: Some(Keycode::Escape), ..} => {
           process::exit(1);
         },
+
+        // Player 1
         Event::KeyDown { keycode: Some(Keycode::Left), ..} => {
           rect.x -= 10;
         },
@@ -65,6 +69,11 @@ fn main() {
         Event::KeyDown { keycode: Some(Keycode::Down), ..} => {
           rect.y += 10;
         },
+        Event::KeyDown { keycode: Some(Keycode::Slash), ..} => {
+          bullets.push(Rect::new(rect.x, rect.y, 5, 5));
+        },
+
+        // Player 2
         Event::KeyDown { keycode: Some(Keycode::A), ..} => {
           rect2.x -= 10;
         },
@@ -77,6 +86,9 @@ fn main() {
         Event::KeyDown { keycode: Some(Keycode::S), ..} => {
           rect2.y += 10;
         },
+        Event::KeyDown { keycode: Some(Keycode::Z), ..} => {
+          bullets.push(Rect::new(rect2.x, rect2.y, 5, 5));
+        },
         _ => {}
       }
     }
@@ -87,6 +99,10 @@ fn main() {
     let _ = renderer.fill_rect(rect);
     let _ = renderer.set_draw_color(p2Color);
     let _ = renderer.fill_rect(rect2);
+    let _ = renderer.set_draw_color(white);
+    for bullet in &bullets {
+      let _ = renderer.fill_rect(*bullet);
+    }
     let _ = renderer.present();
   };
 
