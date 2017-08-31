@@ -53,7 +53,7 @@ fn main() {
   let mut p1Speed = 0.5;
   let mut p2Speed = 0.5;
 
-  let mut p1Pos: [f32; 2] = [10 as f32, 10 as f32];
+  let mut p1Pos: [f32; 2] = [10.0, 10.0];
   let mut p2Pos: [f32; 2] = [rect2Startx as f32, rect2Starty as f32];
 
   let mut events = ctx.event_pump().unwrap();
