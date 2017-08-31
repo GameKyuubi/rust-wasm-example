@@ -42,6 +42,9 @@ fn main() {
   let blue = sdl2::pixels::Color::RGB(0, 0, 255);
   let red = sdl2::pixels::Color::RGB(255, 0, 0);
 
+  let mut p1Color = blue;
+  let mut p2Color = red;
+
   let mut events = ctx.event_pump().unwrap();
 
   let mut main_loop = || {
@@ -80,9 +83,9 @@ fn main() {
 
     let _ = renderer.set_draw_color(black);
     let _ = renderer.clear();
-    let _ = renderer.set_draw_color(blue);
+    let _ = renderer.set_draw_color(p1Color);
     let _ = renderer.fill_rect(rect);
-    let _ = renderer.set_draw_color(red);
+    let _ = renderer.set_draw_color(p2Color);
     let _ = renderer.fill_rect(rect2);
     let _ = renderer.present();
   };
