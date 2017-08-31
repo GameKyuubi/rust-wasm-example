@@ -62,6 +62,18 @@ fn main() {
         Event::KeyDown { keycode: Some(Keycode::Down), ..} => {
           rect.y += 10;
         },
+        Event::KeyDown { keycode: Some(Keycode::A), ..} => {
+          rect2.x -= 10;
+        },
+        Event::KeyDown { keycode: Some(Keycode::D), ..} => {
+          rect2.x += 10;
+        },
+        Event::KeyDown { keycode: Some(Keycode::W), ..} => {
+          rect2.y -= 10;
+        },
+        Event::KeyDown { keycode: Some(Keycode::S), ..} => {
+          rect2.y += 10;
+        },
         _ => {}
       }
     }
