@@ -56,8 +56,13 @@ fn main() {
   let mut p1Speed = 3.0;
   let mut p2Speed = 3.0;
 
-  let mut p1Pos: [f32; 2] = [10.0, 10.0];
-  let mut p2Pos: [f32; 2] = [rect2Startx as f32, rect2Starty as f32];
+  struct Point {
+    x: f32,
+    y: f32,
+  }
+
+  let mut p1Pos: Point = Point { x: 10f32, y: 10f32 };
+  let mut p2Pos: Point = Point { x: rect2Startx as f32, y: rect2Starty as f32 };
 
   let mut events = ctx.event_pump().unwrap();
 
@@ -143,53 +148,53 @@ fn main() {
 
     // Player 1
     match keyState.get(&Keycode::Left) {
-      Some(&true) => p1Pos[0] -= p1Speed,
+      Some(&true) => p1Pos.x -= p1Speed,
       _ => {}
     }
     match keyState.get(&Keycode::Right) {
-      Some(&true) => p1Pos[0] += p1Speed,
+      Some(&true) => p1Pos.x += p1Speed,
       _ => {}
     }
     match keyState.get(&Keycode::Up) {
-      Some(&true) => p1Pos[1] -= p1Speed,
+      Some(&true) => p1Pos.y -= p1Speed,
       _ => {}
     }
     match keyState.get(&Keycode::Down) {
-      Some(&true) => p1Pos[1] += p1Speed,
+      Some(&true) => p1Pos.y += p1Speed,
       _ => {}
     }
     match keyState.get(&Keycode::Slash) {
-      Some(&true) => p1Bullets.push(Rect::new(p1Pos[0] as i32, p1Pos[1] as i32, 5, 5)),
+      Some(&true) => p1Bullets.push(Rect::new(p1Pos.x as i32, p1Pos.y as i32, 5, 5)),
       _ => {}
     }
 
     // Player 2
     match keyState.get(&Keycode::A) {
-      Some(&true) => p2Pos[0] -= p2Speed,
+      Some(&true) => p2Pos.x -= p2Speed,
       _ => {}
     }
     match keyState.get(&Keycode::D) {
-      Some(&true) => p2Pos[0] += p2Speed,
+      Some(&true) => p2Pos.x += p2Speed,
       _ => {}
     }
     match keyState.get(&Keycode::W) {
-      Some(&true) => p2Pos[1] -= p2Speed,
+      Some(&true) => p2Pos.y -= p2Speed,
       _ => {}
     }
     match keyState.get(&Keycode::S) {
-      Some(&true) => p2Pos[1] += p2Speed,
+      Some(&true) => p2Pos.y += p2Speed,
       _ => {}
     }
     match keyState.get(&Keycode::Z) {
-      Some(&true) => p2Bullets.push(Rect::new(p2Pos[0] as i32, p2Pos[1] as i32, 5, 5)),
+      Some(&true) => p2Bullets.push(Rect::new(p2Pos.x as i32, p2Pos.y as i32, 5, 5)),
       _ => {}
     }
 
-    p1Rect.x = p1Pos[0] as i32;
-    p1Rect.y = p1Pos[1] as i32;
+    p1Rect.x = p1Pos.x as i32;
+    p1Rect.y = p1Pos.y as i32;
 
-    p2Rect.x = p2Pos[0] as i32;
-    p2Rect.y = p2Pos[1] as i32;
+    p2Rect.x = p2Pos.x as i32;
+    p2Rect.y = p2Pos.y as i32;
 
     let _ = renderer.set_draw_color(black);
     let _ = renderer.clear();
