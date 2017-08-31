@@ -1,0 +1,7 @@
+[package]
+authors = ["Michael Sodaro <xtra.zero@gmail.com>"]
+name = "rust-example"
+version = "0.1.0"
+
+[dependencies]
+sdl2 = "0.29.0"
