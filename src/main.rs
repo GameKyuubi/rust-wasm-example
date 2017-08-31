@@ -5,6 +5,9 @@ use sdl2::rect::{Rect};
 use sdl2::event::{Event};
 use sdl2::keyboard::Keycode;
 
+#[cfg(target_os = "emscripten")]
+pub mod emscripten;
+
 fn main() {
   let ctx = sdl2::init().unwrap();
   let video_ctx = ctx.video().unwrap();
@@ -61,5 +64,12 @@ fn main() {
     let _ = renderer.present();
   };
 
+  #[cfg(target_os = "emscripten")]
+  use emscripten::{emscripten};
+
+  #[cfg(target_os = "emscripten")]
+  emscripten::set_main_loop_callback(main_loop);
+
+  #[cfg(not(target_os = "emscripten"))]
   loop { main_loop(); }
 }
