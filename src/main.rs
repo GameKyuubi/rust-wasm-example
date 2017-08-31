@@ -38,12 +38,15 @@ fn main() {
 
   let mut p1Rect = Rect::new(10, 10, 10, 10);
   let mut p2Rect = Rect::new(rect2Startx as i32, rect2Starty as i32, 10, 10);
-  let mut bullets :Vec<Rect> = Vec::new();
+  let mut p1Bullets :Vec<Rect> = Vec::new();
+  let mut p2Bullets :Vec<Rect> = Vec::new();
 
   let white = sdl2::pixels::Color::RGB(255, 255, 255);
   let black = sdl2::pixels::Color::RGB(0, 0, 0);
   let blue = sdl2::pixels::Color::RGB(0, 0, 255);
+  let lightBlue = sdl2::pixels::Color::RGB(120, 120, 255);
   let red = sdl2::pixels::Color::RGB(255, 0, 0);
+  let lightRed = sdl2::pixels::Color::RGB(255, 120, 120);
 
   let mut keyState = HashMap::new();
 
@@ -194,8 +197,12 @@ fn main() {
     let _ = renderer.fill_rect(p1Rect);
     let _ = renderer.set_draw_color(p2Color);
     let _ = renderer.fill_rect(p2Rect);
-    let _ = renderer.set_draw_color(white);
-    for bullet in &bullets {
+    let _ = renderer.set_draw_color(lightBlue);
+    for bullet in &p1Bullets {
+      let _ = renderer.fill_rect(*bullet);
+    }
+    let _ = renderer.set_draw_color(lightRed);
+    for bullet in &p2Bullets {
       let _ = renderer.fill_rect(*bullet);
     }
     let _ = renderer.present();
