@@ -9,11 +9,15 @@ use sdl2::keyboard::Keycode;
 pub mod emscripten;
 
 fn main() {
+
+  let windowWidth = 640;
+  let windowHeight = 480;
+
   let ctx = sdl2::init().unwrap();
   let video_ctx = ctx.video().unwrap();
 
   let window  = match video_ctx
-    .window("rust_to_js", 640, 480)
+    .window("rust_to_js", windowWidth, windowHeight)
     .position_centered()
     .opengl()
     .build() {
@@ -28,8 +32,11 @@ fn main() {
       Err(err) => panic!("failed to create renderer: {}", err)
     };
 
+  let rect2Startx = windowWidth - 20;
+  let rect2Starty = windowHeight - 20;
+
   let mut rect = Rect::new(10, 10, 10, 10);
-  let mut rect2 = Rect::new(10, 10, 10, 10);
+  let mut rect2 = Rect::new(rect2Startx as i32, rect2Starty as i32, 10, 10);
 
   let black = sdl2::pixels::Color::RGB(0, 0, 0);
   let blue = sdl2::pixels::Color::RGB(0, 0, 255);
