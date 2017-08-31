@@ -50,8 +50,8 @@ fn main() {
   let mut p1Color = blue;
   let mut p2Color = red;
 
-  let mut p1Speed = 0.5;
-  let mut p2Speed = 0.5;
+  let mut p1Speed = 3.0;
+  let mut p2Speed = 3.0;
 
   let mut p1Pos: [f32; 2] = [10.0, 10.0];
   let mut p2Pos: [f32; 2] = [rect2Startx as f32, rect2Starty as f32];
@@ -170,12 +170,25 @@ fn main() {
       }
     }
 
+    // Player 1
     match keyState.get(&Keycode::Left) {
       Some(&true) => p1Pos[0] -= p1Speed,
       _ => {}
     }
     match keyState.get(&Keycode::Right) {
       Some(&true) => p1Pos[0] += p1Speed,
+      _ => {}
+    }
+    match keyState.get(&Keycode::Up) {
+      Some(&true) => p1Pos[1] -= p1Speed,
+      _ => {}
+    }
+    match keyState.get(&Keycode::Down) {
+      Some(&true) => p1Pos[1] += p1Speed,
+      _ => {}
+    }
+    match keyState.get(&Keycode::Slash) {
+      Some(&true) => bullets.push(Rect::new(p1Pos[0] as i32, p1Pos[1] as i32, 5, 5)),
       _ => {}
     }
 
