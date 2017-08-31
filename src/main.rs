@@ -31,7 +31,7 @@ fn main() {
   let mut rect = Rect::new(10, 10, 10, 10);
 
   let black = sdl2::pixels::Color::RGB(0, 0, 0);
-  let white = sdl2::pixels::Color::RGB(255, 255, 255);
+  let blue = sdl2::pixels::Color::RGB(0, 0, 255);
 
   let mut events = ctx.event_pump().unwrap();
 
@@ -59,7 +59,7 @@ fn main() {
 
     let _ = renderer.set_draw_color(black);
     let _ = renderer.clear();
-    let _ = renderer.set_draw_color(white);
+    let _ = renderer.set_draw_color(blue);
     let _ = renderer.fill_rect(rect);
     let _ = renderer.present();
   };
