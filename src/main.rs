@@ -247,9 +247,9 @@ fn main() {
       }
     }
 
-    let scale = 10;
-    let p1_other_color = 50+(clamp(p1_charge, 0f32, 20f32) as u8)*scale;
-    let p2_other_color = 50+(clamp(p2_charge, 0f32, 20f32) as u8)*scale;
+    let scale = 15;
+    let p1_other_color = 50+(clamp(p1_charge, 0f32, 12f32) as u8)*scale;
+    let p2_other_color = 50+(clamp(p2_charge, 0f32, 12f32) as u8)*scale;
 
     let p1_color = sdl2::pixels::Color::RGB(p1_other_color, p1_other_color, 255);
     let p2_color = sdl2::pixels::Color::RGB(255, p2_other_color, p2_other_color);
