@@ -238,6 +238,19 @@ fn main() {
       }
     }
 
+    for bullet in &p2Bullets {
+      let rect = Rect::new(bullet.position.x as i32, bullet.position.y as i32, 5, 5);
+      if p1Rect.has_intersection(rect) {
+        println!("P1 hit!");
+      }
+    }
+    for bullet in &p1Bullets {
+      let rect = Rect::new(bullet.position.x as i32, bullet.position.y as i32, 5, 5);
+      if p2Rect.has_intersection(rect) {
+        println!("P2 hit!");
+      }
+    }
+
     let scale = 10;
     let p1OtherColor = 50+(clamp(p1Charge, 0f32, 20f32) as u8)*scale;
     let p2OtherColor = 50+(clamp(p2Charge, 0f32, 20f32) as u8)*scale;
