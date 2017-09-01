@@ -50,9 +50,6 @@ fn main() {
 
   let mut keyState = HashMap::new();
 
-  let mut p1Color = blue;
-  let mut p2Color = red;
-
   let mut p1Speed = 3.0;
   let mut p2Speed = 3.0;
 
@@ -69,10 +66,12 @@ fn main() {
   let mut p1Pos: Point = Point { x: 10f32, y: 10f32 };
   let mut p2Pos: Point = Point { x: rect2Startx as f32, y: rect2Starty as f32 };
 
-  let mut p1Charge: f32 = 1.0; // when extended, should default to 0
-  let mut p2Charge: f32 = 1.0;
+  let defaultCharge: f32 = 3.0;
 
-  let chargeRate: f32 = 0.01;
+  let mut p1Charge: f32 = defaultCharge; // when extended, should default to 0
+  let mut p2Charge: f32 = defaultCharge;
+
+  let chargeRate: f32 = 0.1;
   let maxCharge: f32 = 100.0;
 
   let mut events = ctx.event_pump().unwrap();
@@ -84,7 +83,7 @@ fn main() {
           process::exit(1);
         },
 
-        { // KEYDOWN
+        // { // KEYDOWN
           // Player 1
           Event::KeyDown { keycode: Some(Keycode::Left), ..} => {
             keyState.insert(Keycode::Left, true);
@@ -118,9 +117,9 @@ fn main() {
           Event::KeyDown { keycode: Some(Keycode::Z), ..} => {
             keyState.insert(Keycode::Z, true);
           },
-        }
+        // }
 
-        { // KEYUP
+        // { // KEYUP
           // Player 1
           Event::KeyUp { keycode: Some(Keycode::Left), ..} => {
             keyState.insert(Keycode::Left, false);
@@ -143,7 +142,7 @@ fn main() {
               },
               speed: p1Charge,
             });
-            p1Charge = 1f32;
+            p1Charge = defaultCharge;
           },
 
           // Player 2
@@ -168,9 +167,9 @@ fn main() {
               },
               speed: p2Charge,
             });
-            p2Charge = 1f32;
+            p2Charge = defaultCharge;
           },
-        }
+        // }
         _ => {}
       }
     }
@@ -236,6 +235,10 @@ fn main() {
         bullet.position.x -= bullet.speed;
       }
     }
+
+    let scale = 10;
+    let p1Color = sdl2::pixels::Color::RGB(50+(p1Charge as u8)*scale, 50+(p1Charge as u8)*scale, 255);
+    let p2Color = sdl2::pixels::Color::RGB(255, 50+(p2Charge as u8)*scale, 50+(p2Charge as u8)*scale);
 
     { // Draw
       let _ = renderer.set_draw_color(black);
