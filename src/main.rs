@@ -64,6 +64,12 @@ fn main() {
   let mut p1Pos: Point = Point { x: 10f32, y: 10f32 };
   let mut p2Pos: Point = Point { x: rect2Startx as f32, y: rect2Starty as f32 };
 
+  let mut p1Charge: f32 = 1.0; // when extended, should default to 0
+  let mut p2Charge: f32 = 1.0;
+
+  let chargeRate: f32 = 0.01;
+  let maxCharge: f32 = 100.0;
+
   let mut events = ctx.event_pump().unwrap();
 
   let mut main_loop = || {
@@ -195,6 +201,13 @@ fn main() {
 
     p2Rect.x = p2Pos.x as i32;
     p2Rect.y = p2Pos.y as i32;
+
+    for mut bullet in p1Bullets.iter_mut() {
+      bullet.x += p1Charge as i32;
+    }
+    for mut bullet in p2Bullets.iter_mut() {
+      bullet.x -= p2Charge as i32;
+    }
 
     let _ = renderer.set_draw_color(black);
     let _ = renderer.clear();
