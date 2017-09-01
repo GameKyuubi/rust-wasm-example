@@ -13,14 +13,14 @@ pub mod emscripten;
 
 fn main() {
 
-  let windowWidth = 640;
-  let windowHeight = 480;
+  let window_width = 640;
+  let window_height = 480;
 
   let ctx = sdl2::init().unwrap();
   let video_ctx = ctx.video().unwrap();
 
   let window  = match video_ctx
-    .window("rust_to_js", windowWidth, windowHeight)
+    .window("rust_to_js", window_width, window_height)
     .position_centered()
     .opengl()
     .build() {
@@ -35,25 +35,22 @@ fn main() {
       Err(err) => panic!("failed to create renderer: {}", err)
     };
 
-  let rect2Startx = windowWidth - 20;
-  let rect2Starty = windowHeight - 20;
+  let rect2_start_x = window_width - 20;
+  let rect2_start_y = window_height - 20;
 
-  let mut p1Rect = Rect::new(10, 10, 10, 10);
-  let mut p2Rect = Rect::new(rect2Startx as i32, rect2Starty as i32, 10, 10);
-  let mut p1Bullets :Vec<Bullet> = Vec::new();
-  let mut p2Bullets :Vec<Bullet> = Vec::new();
+  let mut p1_rect = Rect::new(10, 10, 10, 10);
+  let mut p2_rect = Rect::new(rect2_start_x as i32, rect2_start_y as i32, 10, 10);
+  let mut p1_bullets :Vec<Bullet> = Vec::new();
+  let mut p2_bullets :Vec<Bullet> = Vec::new();
 
-  let white = sdl2::pixels::Color::RGB(255, 255, 255);
   let black = sdl2::pixels::Color::RGB(0, 0, 0);
-  let blue = sdl2::pixels::Color::RGB(0, 0, 255);
-  let lightBlue = sdl2::pixels::Color::RGB(120, 120, 255);
-  let red = sdl2::pixels::Color::RGB(255, 0, 0);
-  let lightRed = sdl2::pixels::Color::RGB(255, 120, 120);
+  let light_blue = sdl2::pixels::Color::RGB(120, 120, 255);
+  let light_red = sdl2::pixels::Color::RGB(255, 120, 120);
 
-  let mut keyState = HashMap::new();
+  let mut key_state = HashMap::new();
 
-  let mut p1Speed = 3.0;
-  let mut p2Speed = 3.0;
+  let p1_speed = 3.0;
+  let p2_speed = 3.0;
 
   struct Point {
     x: f32,
@@ -65,16 +62,15 @@ fn main() {
     speed: f32
   }
 
-  let mut p1Pos: Point = Point { x: 10f32, y: 10f32 };
-  let mut p2Pos: Point = Point { x: rect2Startx as f32, y: rect2Starty as f32 };
+  let mut p1_pos: Point = Point { x: 10f32, y: 10f32 };
+  let mut p2_pos: Point = Point { x: rect2_start_x as f32, y: rect2_start_y as f32 };
 
-  let defaultCharge: f32 = 3.0;
+  let default_charge: f32 = 3.0;
 
-  let mut p1Charge: f32 = defaultCharge; // when extended, should default to 0
-  let mut p2Charge: f32 = defaultCharge;
+  let mut p1_charge: f32 = default_charge; // when extended, should default to 0
+  let mut p2_charge: f32 = default_charge;
 
-  let chargeRate: f32 = 0.1;
-  let maxCharge: f32 = 100.0;
+  let charge_rate: f32 = 0.1;
 
   let mut events = ctx.event_pump().unwrap();
 
@@ -88,88 +84,88 @@ fn main() {
         // { // KEYDOWN
           // Player 1
           Event::KeyDown { keycode: Some(Keycode::Left), ..} => {
-            keyState.insert(Keycode::Left, true);
+            key_state.insert(Keycode::Left, true);
           },
           Event::KeyDown { keycode: Some(Keycode::Right), ..} => {
-            keyState.insert(Keycode::Right, true);
+            key_state.insert(Keycode::Right, true);
           },
           Event::KeyDown { keycode: Some(Keycode::Up), ..} => {
-            keyState.insert(Keycode::Up, true);
+            key_state.insert(Keycode::Up, true);
           },
           Event::KeyDown { keycode: Some(Keycode::Down), ..} => {
-            keyState.insert(Keycode::Down, true);
+            key_state.insert(Keycode::Down, true);
           },
           Event::KeyDown { keycode: Some(Keycode::Slash), ..} => {
-            keyState.insert(Keycode::Slash, true);
+            key_state.insert(Keycode::Slash, true);
           },
 
           // Player 2
           Event::KeyDown { keycode: Some(Keycode::A), ..} => {
-            keyState.insert(Keycode::A, true);
+            key_state.insert(Keycode::A, true);
           },
           Event::KeyDown { keycode: Some(Keycode::D), ..} => {
-            keyState.insert(Keycode::D, true);
+            key_state.insert(Keycode::D, true);
           },
           Event::KeyDown { keycode: Some(Keycode::W), ..} => {
-            keyState.insert(Keycode::W, true);
+            key_state.insert(Keycode::W, true);
           },
           Event::KeyDown { keycode: Some(Keycode::S), ..} => {
-            keyState.insert(Keycode::S, true);
+            key_state.insert(Keycode::S, true);
           },
           Event::KeyDown { keycode: Some(Keycode::Z), ..} => {
-            keyState.insert(Keycode::Z, true);
+            key_state.insert(Keycode::Z, true);
           },
         // }
 
         // { // KEYUP
           // Player 1
           Event::KeyUp { keycode: Some(Keycode::Left), ..} => {
-            keyState.insert(Keycode::Left, false);
+            key_state.insert(Keycode::Left, false);
           },
           Event::KeyUp { keycode: Some(Keycode::Right), ..} => {
-            keyState.insert(Keycode::Right, false);
+            key_state.insert(Keycode::Right, false);
           },
           Event::KeyUp { keycode: Some(Keycode::Up), ..} => {
-            keyState.insert(Keycode::Up, false);
+            key_state.insert(Keycode::Up, false);
           },
           Event::KeyUp { keycode: Some(Keycode::Down), ..} => {
-            keyState.insert(Keycode::Down, false);
+            key_state.insert(Keycode::Down, false);
           },
           Event::KeyUp { keycode: Some(Keycode::Slash), ..} => {
-            keyState.insert(Keycode::Slash, false);
-            p1Bullets.push(Bullet {
+            key_state.insert(Keycode::Slash, false);
+            p1_bullets.push(Bullet {
               position: Point {
-                x: p1Pos.x,
-                y: p1Pos.y,
+                x: p1_pos.x,
+                y: p1_pos.y,
               },
-              speed: p1Charge,
+              speed: p1_charge,
             });
-            p1Charge = defaultCharge;
+            p1_charge = default_charge;
           },
 
           // Player 2
           Event::KeyUp { keycode: Some(Keycode::A), ..} => {
-            keyState.insert(Keycode::A, false);
+            key_state.insert(Keycode::A, false);
           },
           Event::KeyUp { keycode: Some(Keycode::D), ..} => {
-            keyState.insert(Keycode::D, false);
+            key_state.insert(Keycode::D, false);
           },
           Event::KeyUp { keycode: Some(Keycode::W), ..} => {
-            keyState.insert(Keycode::W, false);
+            key_state.insert(Keycode::W, false);
           },
           Event::KeyUp { keycode: Some(Keycode::S), ..} => {
-            keyState.insert(Keycode::S, false);
+            key_state.insert(Keycode::S, false);
           },
           Event::KeyUp { keycode: Some(Keycode::Z), ..} => {
-            keyState.insert(Keycode::Z, false);
-            p2Bullets.push(Bullet {
+            key_state.insert(Keycode::Z, false);
+            p2_bullets.push(Bullet {
               position: Point {
-                x: p2Pos.x,
-                y: p2Pos.y,
+                x: p2_pos.x,
+                y: p2_pos.y,
               },
-              speed: p2Charge,
+              speed: p2_charge,
             });
-            p2Charge = defaultCharge;
+            p2_charge = default_charge;
           },
         // }
         _ => {}
@@ -179,98 +175,98 @@ fn main() {
     // Update
     {
       { // Player 1
-        match keyState.get(&Keycode::Left) {
-          Some(&true) => p1Pos.x -= p1Speed,
+        match key_state.get(&Keycode::Left) {
+          Some(&true) => p1_pos.x -= p1_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::Right) {
-          Some(&true) => p1Pos.x += p1Speed,
+        match key_state.get(&Keycode::Right) {
+          Some(&true) => p1_pos.x += p1_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::Up) {
-          Some(&true) => p1Pos.y -= p1Speed,
+        match key_state.get(&Keycode::Up) {
+          Some(&true) => p1_pos.y -= p1_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::Down) {
-          Some(&true) => p1Pos.y += p1Speed,
+        match key_state.get(&Keycode::Down) {
+          Some(&true) => p1_pos.y += p1_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::Slash) {
-          Some(&true) => p1Charge += chargeRate,
+        match key_state.get(&Keycode::Slash) {
+          Some(&true) => p1_charge += charge_rate,
           _ => {}
         }
       }
 
       { // Player 2
-        match keyState.get(&Keycode::A) {
-          Some(&true) => p2Pos.x -= p2Speed,
+        match key_state.get(&Keycode::A) {
+          Some(&true) => p2_pos.x -= p2_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::D) {
-          Some(&true) => p2Pos.x += p2Speed,
+        match key_state.get(&Keycode::D) {
+          Some(&true) => p2_pos.x += p2_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::W) {
-          Some(&true) => p2Pos.y -= p2Speed,
+        match key_state.get(&Keycode::W) {
+          Some(&true) => p2_pos.y -= p2_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::S) {
-          Some(&true) => p2Pos.y += p2Speed,
+        match key_state.get(&Keycode::S) {
+          Some(&true) => p2_pos.y += p2_speed,
           _ => {}
         }
-        match keyState.get(&Keycode::Z) {
-          Some(&true) => p2Charge += chargeRate,
+        match key_state.get(&Keycode::Z) {
+          Some(&true) => p2_charge += charge_rate,
           _ => {}
         }
       }
 
-      p1Rect.x = p1Pos.x as i32;
-      p1Rect.y = p1Pos.y as i32;
+      p1_rect.x = p1_pos.x as i32;
+      p1_rect.y = p1_pos.y as i32;
 
-      p2Rect.x = p2Pos.x as i32;
-      p2Rect.y = p2Pos.y as i32;
+      p2_rect.x = p2_pos.x as i32;
+      p2_rect.y = p2_pos.y as i32;
 
-      for mut bullet in p1Bullets.iter_mut() {
+      for mut bullet in p1_bullets.iter_mut() {
         bullet.position.x += bullet.speed;
       }
-      for mut bullet in p2Bullets.iter_mut() {
+      for mut bullet in p2_bullets.iter_mut() {
         bullet.position.x -= bullet.speed;
       }
     }
 
-    for bullet in &p2Bullets {
+    for bullet in &p2_bullets {
       let rect = Rect::new(bullet.position.x as i32, bullet.position.y as i32, 5, 5);
-      if p1Rect.has_intersection(rect) {
+      if p1_rect.has_intersection(rect) {
         println!("P1 hit!");
       }
     }
-    for bullet in &p1Bullets {
+    for bullet in &p1_bullets {
       let rect = Rect::new(bullet.position.x as i32, bullet.position.y as i32, 5, 5);
-      if p2Rect.has_intersection(rect) {
+      if p2_rect.has_intersection(rect) {
         println!("P2 hit!");
       }
     }
 
     let scale = 10;
-    let p1OtherColor = 50+(clamp(p1Charge, 0f32, 20f32) as u8)*scale;
-    let p2OtherColor = 50+(clamp(p2Charge, 0f32, 20f32) as u8)*scale;
+    let p1_other_color = 50+(clamp(p1_charge, 0f32, 20f32) as u8)*scale;
+    let p2_other_color = 50+(clamp(p2_charge, 0f32, 20f32) as u8)*scale;
 
-    let p1Color = sdl2::pixels::Color::RGB(p1OtherColor, p1OtherColor, 255);
-    let p2Color = sdl2::pixels::Color::RGB(255, p2OtherColor, p2OtherColor);
+    let p1_color = sdl2::pixels::Color::RGB(p1_other_color, p1_other_color, 255);
+    let p2_color = sdl2::pixels::Color::RGB(255, p2_other_color, p2_other_color);
 
     { // Draw
       let _ = renderer.set_draw_color(black);
       let _ = renderer.clear();
-      let _ = renderer.set_draw_color(p1Color);
-      let _ = renderer.fill_rect(p1Rect);
-      let _ = renderer.set_draw_color(p2Color);
-      let _ = renderer.fill_rect(p2Rect);
-      let _ = renderer.set_draw_color(lightBlue);
-      for bullet in &p1Bullets {
+      let _ = renderer.set_draw_color(p1_color);
+      let _ = renderer.fill_rect(p1_rect);
+      let _ = renderer.set_draw_color(p2_color);
+      let _ = renderer.fill_rect(p2_rect);
+      let _ = renderer.set_draw_color(light_blue);
+      for bullet in &p1_bullets {
         let _ = renderer.fill_rect(Rect::new(bullet.position.x as i32, bullet.position.y as i32, 5, 5));
       }
-      let _ = renderer.set_draw_color(lightRed);
-      for bullet in &p2Bullets {
+      let _ = renderer.set_draw_color(light_red);
+      for bullet in &p2_bullets {
         let _ = renderer.fill_rect(Rect::new(bullet.position.x as i32, bullet.position.y as i32, 5, 5));
       }
       let _ = renderer.present();
