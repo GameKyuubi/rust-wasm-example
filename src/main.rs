@@ -79,151 +79,160 @@ fn main() {
           process::exit(1);
         },
 
-        // KEYDOWN
-        // Player 1
-        Event::KeyDown { keycode: Some(Keycode::Left), ..} => {
-          keyState.insert(Keycode::Left, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::Right), ..} => {
-          keyState.insert(Keycode::Right, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::Up), ..} => {
-          keyState.insert(Keycode::Up, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::Down), ..} => {
-          keyState.insert(Keycode::Down, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::Slash), ..} => {
-          keyState.insert(Keycode::Slash, true);
-        },
+        { // KEYDOWN
+          // Player 1
+          Event::KeyDown { keycode: Some(Keycode::Left), ..} => {
+            keyState.insert(Keycode::Left, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::Right), ..} => {
+            keyState.insert(Keycode::Right, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::Up), ..} => {
+            keyState.insert(Keycode::Up, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::Down), ..} => {
+            keyState.insert(Keycode::Down, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::Slash), ..} => {
+            keyState.insert(Keycode::Slash, true);
+          },
 
-        // Player 2
-        Event::KeyDown { keycode: Some(Keycode::A), ..} => {
-          keyState.insert(Keycode::A, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::D), ..} => {
-          keyState.insert(Keycode::D, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::W), ..} => {
-          keyState.insert(Keycode::W, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::S), ..} => {
-          keyState.insert(Keycode::S, true);
-        },
-        Event::KeyDown { keycode: Some(Keycode::Z), ..} => {
-          keyState.insert(Keycode::Z, true);
-        },
+          // Player 2
+          Event::KeyDown { keycode: Some(Keycode::A), ..} => {
+            keyState.insert(Keycode::A, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::D), ..} => {
+            keyState.insert(Keycode::D, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::W), ..} => {
+            keyState.insert(Keycode::W, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::S), ..} => {
+            keyState.insert(Keycode::S, true);
+          },
+          Event::KeyDown { keycode: Some(Keycode::Z), ..} => {
+            keyState.insert(Keycode::Z, true);
+          },
+        }
 
-        // KEYUP
-        // Player 1
-        Event::KeyUp { keycode: Some(Keycode::Left), ..} => {
-          keyState.insert(Keycode::Left, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::Right), ..} => {
-          keyState.insert(Keycode::Right, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::Up), ..} => {
-          keyState.insert(Keycode::Up, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::Down), ..} => {
-          keyState.insert(Keycode::Down, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::Slash), ..} => {
-          keyState.insert(Keycode::Slash, false);
-        },
+        { // KEYUP
+          // Player 1
+          Event::KeyUp { keycode: Some(Keycode::Left), ..} => {
+            keyState.insert(Keycode::Left, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::Right), ..} => {
+            keyState.insert(Keycode::Right, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::Up), ..} => {
+            keyState.insert(Keycode::Up, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::Down), ..} => {
+            keyState.insert(Keycode::Down, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::Slash), ..} => {
+            keyState.insert(Keycode::Slash, false);
+          },
 
-        // Player 2
-        Event::KeyUp { keycode: Some(Keycode::A), ..} => {
-          keyState.insert(Keycode::A, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::D), ..} => {
-          keyState.insert(Keycode::D, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::W), ..} => {
-          keyState.insert(Keycode::W, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::S), ..} => {
-          keyState.insert(Keycode::S, false);
-        },
-        Event::KeyUp { keycode: Some(Keycode::Z), ..} => {
-          keyState.insert(Keycode::Z, false);
-        },
+          // Player 2
+          Event::KeyUp { keycode: Some(Keycode::A), ..} => {
+            keyState.insert(Keycode::A, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::D), ..} => {
+            keyState.insert(Keycode::D, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::W), ..} => {
+            keyState.insert(Keycode::W, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::S), ..} => {
+            keyState.insert(Keycode::S, false);
+          },
+          Event::KeyUp { keycode: Some(Keycode::Z), ..} => {
+            keyState.insert(Keycode::Z, false);
+          },
+        }
         _ => {}
       }
     }
 
-    // Player 1
-    match keyState.get(&Keycode::Left) {
-      Some(&true) => p1Pos.x -= p1Speed,
-      _ => {}
-    }
-    match keyState.get(&Keycode::Right) {
-      Some(&true) => p1Pos.x += p1Speed,
-      _ => {}
-    }
-    match keyState.get(&Keycode::Up) {
-      Some(&true) => p1Pos.y -= p1Speed,
-      _ => {}
-    }
-    match keyState.get(&Keycode::Down) {
-      Some(&true) => p1Pos.y += p1Speed,
-      _ => {}
-    }
-    match keyState.get(&Keycode::Slash) {
-      Some(&true) => p1Bullets.push(Rect::new(p1Pos.x as i32, p1Pos.y as i32, 5, 5)),
-      _ => {}
+    // Update
+    {
+      { // Player 1
+        match keyState.get(&Keycode::Left) {
+          Some(&true) => p1Pos.x -= p1Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::Right) {
+          Some(&true) => p1Pos.x += p1Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::Up) {
+          Some(&true) => p1Pos.y -= p1Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::Down) {
+          Some(&true) => p1Pos.y += p1Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::Slash) {
+          Some(&true) => p1Bullets.push(Rect::new(p1Pos.x as i32, p1Pos.y as i32, 5, 5)),
+          _ => {}
+        }
+      }
+
+      { // Player 2
+        match keyState.get(&Keycode::A) {
+          Some(&true) => p2Pos.x -= p2Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::D) {
+          Some(&true) => p2Pos.x += p2Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::W) {
+          Some(&true) => p2Pos.y -= p2Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::S) {
+          Some(&true) => p2Pos.y += p2Speed,
+          _ => {}
+        }
+        match keyState.get(&Keycode::Z) {
+          Some(&true) => p2Bullets.push(Rect::new(p2Pos.x as i32, p2Pos.y as i32, 5, 5)),
+          _ => {}
+        }
+      }
+
+      p1Rect.x = p1Pos.x as i32;
+      p1Rect.y = p1Pos.y as i32;
+
+      p2Rect.x = p2Pos.x as i32;
+      p2Rect.y = p2Pos.y as i32;
+
+      for mut bullet in p1Bullets.iter_mut() {
+        bullet.x += p1Charge as i32;
+      }
+      for mut bullet in p2Bullets.iter_mut() {
+        bullet.x -= p2Charge as i32;
+      }
     }
 
-    // Player 2
-    match keyState.get(&Keycode::A) {
-      Some(&true) => p2Pos.x -= p2Speed,
-      _ => {}
+    { // Draw
+      let _ = renderer.set_draw_color(black);
+      let _ = renderer.clear();
+      let _ = renderer.set_draw_color(p1Color);
+      let _ = renderer.fill_rect(p1Rect);
+      let _ = renderer.set_draw_color(p2Color);
+      let _ = renderer.fill_rect(p2Rect);
+      let _ = renderer.set_draw_color(lightBlue);
+      for bullet in &p1Bullets {
+        let _ = renderer.fill_rect(*bullet);
+      }
+      let _ = renderer.set_draw_color(lightRed);
+      for bullet in &p2Bullets {
+        let _ = renderer.fill_rect(*bullet);
+      }
+      let _ = renderer.present();
     }
-    match keyState.get(&Keycode::D) {
-      Some(&true) => p2Pos.x += p2Speed,
-      _ => {}
-    }
-    match keyState.get(&Keycode::W) {
-      Some(&true) => p2Pos.y -= p2Speed,
-      _ => {}
-    }
-    match keyState.get(&Keycode::S) {
-      Some(&true) => p2Pos.y += p2Speed,
-      _ => {}
-    }
-    match keyState.get(&Keycode::Z) {
-      Some(&true) => p2Bullets.push(Rect::new(p2Pos.x as i32, p2Pos.y as i32, 5, 5)),
-      _ => {}
-    }
-
-    p1Rect.x = p1Pos.x as i32;
-    p1Rect.y = p1Pos.y as i32;
-
-    p2Rect.x = p2Pos.x as i32;
-    p2Rect.y = p2Pos.y as i32;
-
-    for mut bullet in p1Bullets.iter_mut() {
-      bullet.x += p1Charge as i32;
-    }
-    for mut bullet in p2Bullets.iter_mut() {
-      bullet.x -= p2Charge as i32;
-    }
-
-    let _ = renderer.set_draw_color(black);
-    let _ = renderer.clear();
-    let _ = renderer.set_draw_color(p1Color);
-    let _ = renderer.fill_rect(p1Rect);
-    let _ = renderer.set_draw_color(p2Color);
-    let _ = renderer.fill_rect(p2Rect);
-    let _ = renderer.set_draw_color(lightBlue);
-    for bullet in &p1Bullets {
-      let _ = renderer.fill_rect(*bullet);
-    }
-    let _ = renderer.set_draw_color(lightRed);
-    for bullet in &p2Bullets {
-      let _ = renderer.fill_rect(*bullet);
-    }
-    let _ = renderer.present();
   };
 
   #[cfg(target_os = "emscripten")]
