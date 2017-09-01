@@ -100,17 +100,17 @@ fn main() {
           },
 
           // Player 2
-          Event::KeyDown { keycode: Some(Keycode::A), ..} => {
-            key_state.insert(Keycode::A, true);
+          Event::KeyDown { keycode: Some(Keycode::F), ..} => {
+            key_state.insert(Keycode::F, true);
           },
-          Event::KeyDown { keycode: Some(Keycode::D), ..} => {
-            key_state.insert(Keycode::D, true);
+          Event::KeyDown { keycode: Some(Keycode::H), ..} => {
+            key_state.insert(Keycode::H, true);
           },
-          Event::KeyDown { keycode: Some(Keycode::W), ..} => {
-            key_state.insert(Keycode::W, true);
+          Event::KeyDown { keycode: Some(Keycode::T), ..} => {
+            key_state.insert(Keycode::T, true);
           },
-          Event::KeyDown { keycode: Some(Keycode::S), ..} => {
-            key_state.insert(Keycode::S, true);
+          Event::KeyDown { keycode: Some(Keycode::G), ..} => {
+            key_state.insert(Keycode::G, true);
           },
           Event::KeyDown { keycode: Some(Keycode::Z), ..} => {
             key_state.insert(Keycode::Z, true);
@@ -144,17 +144,17 @@ fn main() {
           },
 
           // Player 2
-          Event::KeyUp { keycode: Some(Keycode::A), ..} => {
-            key_state.insert(Keycode::A, false);
+          Event::KeyUp { keycode: Some(Keycode::F), ..} => {
+            key_state.insert(Keycode::F, false);
           },
-          Event::KeyUp { keycode: Some(Keycode::D), ..} => {
-            key_state.insert(Keycode::D, false);
+          Event::KeyUp { keycode: Some(Keycode::H), ..} => {
+            key_state.insert(Keycode::H, false);
           },
-          Event::KeyUp { keycode: Some(Keycode::W), ..} => {
-            key_state.insert(Keycode::W, false);
+          Event::KeyUp { keycode: Some(Keycode::T), ..} => {
+            key_state.insert(Keycode::T, false);
           },
-          Event::KeyUp { keycode: Some(Keycode::S), ..} => {
-            key_state.insert(Keycode::S, false);
+          Event::KeyUp { keycode: Some(Keycode::G), ..} => {
+            key_state.insert(Keycode::G, false);
           },
           Event::KeyUp { keycode: Some(Keycode::Z), ..} => {
             key_state.insert(Keycode::Z, false);
@@ -198,19 +198,19 @@ fn main() {
       }
 
       { // Player 2
-        match key_state.get(&Keycode::A) {
+        match key_state.get(&Keycode::F) {
           Some(&true) => p2_pos.x -= p2_speed,
           _ => {}
         }
-        match key_state.get(&Keycode::D) {
+        match key_state.get(&Keycode::H) {
           Some(&true) => p2_pos.x += p2_speed,
           _ => {}
         }
-        match key_state.get(&Keycode::W) {
+        match key_state.get(&Keycode::T) {
           Some(&true) => p2_pos.y -= p2_speed,
           _ => {}
         }
-        match key_state.get(&Keycode::S) {
+        match key_state.get(&Keycode::G) {
           Some(&true) => p2_pos.y += p2_speed,
           _ => {}
         }
