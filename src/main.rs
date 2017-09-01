@@ -1,5 +1,7 @@
 extern crate sdl2;
+extern crate num;
 
+use num::clamp;
 use std::collections::HashMap;
 use std::process;
 use sdl2::rect::{Rect};
@@ -237,8 +239,11 @@ fn main() {
     }
 
     let scale = 10;
-    let p1Color = sdl2::pixels::Color::RGB(50+(p1Charge as u8)*scale, 50+(p1Charge as u8)*scale, 255);
-    let p2Color = sdl2::pixels::Color::RGB(255, 50+(p2Charge as u8)*scale, 50+(p2Charge as u8)*scale);
+    let p1OtherColor = 50+(clamp(p1Charge, 0f32, 20f32) as u8)*scale;
+    let p2OtherColor = 50+(clamp(p2Charge, 0f32, 20f32) as u8)*scale;
+
+    let p1Color = sdl2::pixels::Color::RGB(p1OtherColor, p1OtherColor, 255);
+    let p2Color = sdl2::pixels::Color::RGB(255, p2OtherColor, p2OtherColor);
 
     { // Draw
       let _ = renderer.set_draw_color(black);
